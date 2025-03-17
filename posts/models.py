@@ -34,7 +34,6 @@ class Post(models.Model):
 class PostLike(models.Model):
 
     POST_VALUES = [
-        ('default', 'Default'),
         ('like', 'Like'),
         ('dislike', 'Dislike')
     ]
@@ -42,4 +41,4 @@ class PostLike(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='likes')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='likes')
     created_at = models.DateTimeField(auto_now_add=True)
-    value = models.CharField(max_length=10, choices=POST_VALUES, default='default')
+    value = models.CharField(max_length=10, choices=POST_VALUES, default='dislike')
