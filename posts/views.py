@@ -12,6 +12,7 @@ class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     pagination_class = PostPagination
+    #permission_classes = [IsAuthenticated]
 
 class PostReactionView(APIView):
     permission_classes = [IsAuthenticated]
