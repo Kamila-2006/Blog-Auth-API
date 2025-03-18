@@ -1,3 +1,4 @@
-from django.shortcuts import render
-
-# Create your views here.
+from rest_framework import generics
+from .models import Comment
+from .serializers import CommentSerializer
+from .pagination import CommentPagination
