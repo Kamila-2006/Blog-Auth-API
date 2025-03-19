@@ -8,4 +8,5 @@ router.register(r'categories', views.CategoryViewSet, basename='category')
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('categories/<int:pk>/posts/', views.CategoryPostsView.as_view(), name='category-posts'),
 ]

@@ -2,7 +2,8 @@ from rest_framework import viewsets
 from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from .permissions import IsAuthorOrAdmin
 from .models import Post, PostLike
 from .serializers import PostSerializer
 from .pagination import PostPagination
@@ -12,7 +13,14 @@ class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     pagination_class = PostPagination
-    #permission_classes = [IsAuthenticated]
+
+    def get_permissions(self):
+        if self.action in ['list', 'retrieve']:
+            return [AllowAny()]
+        elif self.action == 'create':
+            return [IsAuthenticated()]
+        else:
+            return [IsAuthorOrAdmin()]
 
 class PostReactionView(APIView):
     permission_classes = [IsAuthenticated]

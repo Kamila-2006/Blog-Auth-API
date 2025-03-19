@@ -8,5 +8,5 @@ router.register(r'posts', views.PostViewSet, basename='post')
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('<str:slug>/like', views.PostReactionView.as_view(), name='reaction'),
+    path('posts/<slug:slug>/like/', views.PostReactionView.as_view(), name='reaction'),
 ]
