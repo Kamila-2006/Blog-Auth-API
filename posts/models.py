@@ -21,7 +21,7 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
-    featured_image = models.ImageField(upload_to='post-images/')
+    featured_image = models.ImageField(upload_to='post-images/', blank=True, null=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:

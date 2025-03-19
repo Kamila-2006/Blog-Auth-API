@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .permissions import IsAuthorOrAdmin
 from .models import Post, PostLike
+from django.contrib.auth.models import User
 from .serializers import PostSerializer
 from .pagination import PostPagination
 
@@ -44,3 +45,12 @@ class PostReactionView(APIView):
                 return Response({"message": f"Reaction changed to {value}"}, status=200)
 
         return Response({"message": f"{value} added"}, status=201)
+
+class UserPostsView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request, username):
+        user = get_object_or_404(User, username=username)
+        posts = Post.objects.filter(author=user)
+        serializer = PostSerializer(posts, many=True)
+        return Response(serializer.data)
